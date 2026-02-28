@@ -5,18 +5,19 @@ import {
     Platform, Dimensions,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { height } = Dimensions.get('window');
 
 export default function WelcomeScreen({ navigation }) {
+    const insets = useSafeAreaInsets();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [savePassword, setSavePassword] = useState(false);
 
     return (
-        <SafeAreaView style={styles.safeArea} edges={['top']}>
+        <View style={[styles.safeArea, { paddingTop: insets.top }]}>
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -24,6 +25,9 @@ export default function WelcomeScreen({ navigation }) {
                 <ScrollView contentContainerStyle={styles.scroll} bounces={false}>
                     {/* Yellow Header */}
                     <View style={styles.header}>
+                        <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
+                            <MaterialCommunityIcons name="arrow-left" size={22} color="#1A1A1A" />
+                        </TouchableOpacity>
                         <MaterialCommunityIcons name="account-circle" size={64} color="rgba(255,255,255,0.35)" style={styles.headerIcon} />
                         <Text style={styles.headerTitle}>Hello</Text>
                         <Text style={styles.headerSubtitle}>Welcome Back!</Text>
@@ -109,7 +113,7 @@ export default function WelcomeScreen({ navigation }) {
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
-        </SafeAreaView>
+        </View>
     );
 }
 
@@ -123,6 +127,18 @@ const styles = StyleSheet.create({
         paddingTop: 30,
         paddingBottom: 50,
         position: 'relative',
+    },
+    backBtn: {
+        position: 'absolute',
+        top: 20,
+        left: 24,
+        width: 40,
+        height: 40,
+        borderRadius: 12,
+        backgroundColor: 'rgba(255,255,255,0.4)',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 10,
     },
     headerIcon: { position: 'absolute', top: 20, right: 24 },
     headerTitle: {

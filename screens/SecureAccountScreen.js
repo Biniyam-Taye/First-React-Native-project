@@ -4,9 +4,10 @@ import {
     StyleSheet, ScrollView, KeyboardAvoidingView, Platform,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function SecureAccountScreen({ navigation }) {
+    const insets = useSafeAreaInsets();
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [phone, setPhone] = useState('');
@@ -14,7 +15,7 @@ export default function SecureAccountScreen({ navigation }) {
     const [question, setQuestion] = useState('What was your first pet\'s name?');
 
     return (
-        <SafeAreaView style={styles.safeArea} edges={['top']}>
+        <View style={[styles.safeArea, { paddingTop: insets.top }]}>
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -154,7 +155,7 @@ export default function SecureAccountScreen({ navigation }) {
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
-        </SafeAreaView>
+        </View>
     );
 }
 

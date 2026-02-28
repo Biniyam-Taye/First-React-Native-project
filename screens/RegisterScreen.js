@@ -4,16 +4,17 @@ import {
     StyleSheet, ScrollView, KeyboardAvoidingView, Platform,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function RegisterScreen({ navigation }) {
+    const insets = useSafeAreaInsets();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
 
     return (
-        <SafeAreaView style={styles.safeArea} edges={['top']}>
+        <View style={[styles.safeArea, { paddingTop: insets.top }]}>
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -121,7 +122,7 @@ export default function RegisterScreen({ navigation }) {
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
-        </SafeAreaView>
+        </View>
     );
 }
 
